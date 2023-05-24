@@ -1,0 +1,103 @@
+#root {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+.books-container{
+  margin: 2% auto;
+  width: 80vw;
+  display: flex;
+  gap: 10px;
+  flex-wrap:  wrap;
+  justify-content: space-around;
+  padding: 15px;
+  background: #fff;
+  border-radius: 10px;
+}
+
+.layout{
+  min-height: 100vh;
+}
+
+.books-title{
+  white-space: pre-wrap;
+  font-size: x-small;
+  gap: 5px;
+}
+
+.books-card{
+  width: 220px;
+  height: 300px;
+  color: black;
+}
+
+.book-date{
+  font-size: x-small;
+}
+.book-authors{
+  font-size: small;
+}
+
+.group-section{
+  justify-content: end;
+  color: black;
+}
+
+.admin-panel{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 2%;
+}
+
+.admin-panel > .buttons{
+  display: flex;
+  justify-content: space-between;
+  width: 50%;
+}
+
+.buttons > .delete, 
+.buttons > .editBtn{
+  width: 150px;
+}
+.buttons > .delete,
+.delete-btn{
+  color: red;
+  border: 1px solid red;
+}
+
+.book-form-button{
+  display: flex;
+  justify-content: space-between;
+}
+
