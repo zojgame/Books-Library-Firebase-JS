@@ -1,17 +1,21 @@
 import { Divider } from "antd";
 import { BookCard } from "./BookCard";
+import { Fragment } from "react";
 
 export function BooksSection({ booksPeriod, booksByPeriod }) {
 
     return (
       <div className='books-container'>
-        <Divider orientation="left">{booksPeriod}</Divider>
+        <Divider orientation="left" className="book-period-title">{booksPeriod}</Divider>
           {booksByPeriod.map((book) => 
           { return (
-            <BookCard book={book} 
-              key={book.id}/>)
+            <Fragment key={book.id}>
+              <BookCard book={book}
+                />
+            </Fragment>)
           })
         }
+        
         </div>
     )
   }

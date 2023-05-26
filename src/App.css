@@ -6,6 +6,7 @@
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
 }
+
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
@@ -37,10 +38,10 @@
   margin: 2% auto;
   width: 80vw;
   display: flex;
-  gap: 10px;
+  gap: 20px;
   flex-wrap:  wrap;
-  justify-content: space-around;
-  padding: 15px;
+  justify-content: start;
+  padding: 20px;
   background: #fff;
   border-radius: 10px;
 }
@@ -51,21 +52,64 @@
 
 .books-title{
   white-space: pre-wrap;
-  font-size: x-small;
-  gap: 5px;
+  font-size: small;
+  color: white;
 }
 
 .books-card{
-  width: 220px;
-  height: 300px;
+  font-family: monospace;
+  width: 270px;
+  min-height: 350px;
   color: black;
+  border-radius: 10px 10px 0 0;
+  border: 2px solid black;
 }
 
-.book-date{
+.ant-card-head{
+  background: #084176 !important;
+}
+
+.book-date{ 
+  font-family: cursive; 
+  align-self: flex-start;
   font-size: x-small;
 }
+
+.book-isnb{
+  font-family: cursive; 
+  align-self: flex-start;
+  font-size: xx-small;
+  margin: 0;
+  margin-bottom: 10px;
+}
+
+.book-rating{
+  font-weight: 600;
+  margin: 15px 0;
+}
+
 .book-authors{
-  font-size: small;
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.book-authors > p{
+  padding: 0; 
+  margin: 0;  
+  font-weight:900;
+  font-size: medium ;
+}
+
+.card-btn{
+  width: 100%;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+.ant-card-body{
+  padding: 0 25px;
+  height: 50%; 
 }
 
 .group-section{
@@ -90,6 +134,11 @@
 .buttons > .editBtn{
   width: 150px;
 }
+.book-buttons{
+  /* border: 1px solid black; */
+}
+
+
 .buttons > .delete,
 .delete-btn{
   color: red;
@@ -98,6 +147,11 @@
 
 .book-form-button{
   display: flex;
-  justify-content: space-between;
+  justify-content: start;
 }
 
+.change-authors-btn{
+  display: flex;
+  gap: 15px;
+  margin-bottom: 15px;
+}

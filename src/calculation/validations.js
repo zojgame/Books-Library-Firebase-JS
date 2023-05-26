@@ -1,6 +1,6 @@
 export function isnbValidation(rule, value) {
 
-    if(value === undefined && value === ''){
+    if(value === undefined || value === '' || value === null){
         return Promise.resolve()
     }
     
@@ -50,7 +50,7 @@ export function isnbValidation(rule, value) {
 
 export function dateValidation(rule, value){
 
-    if(value === undefined || value === ''){
+    if(value === undefined || value === '' || value === null){
         return Promise.resolve()
     }
 
@@ -59,7 +59,6 @@ export function dateValidation(rule, value){
     }
     else{
         if(Number(value) <= 1800){
-            console.log('value', value)
             return Promise.reject(new Error('Please, enter the value that more than 1800'))
         }
     }
@@ -69,7 +68,7 @@ export function dateValidation(rule, value){
 }
 
 export function ratingValidation(rule, value){
-    if(value === undefined && value === ''){
+    if(value === undefined || value === '' || value === null){
         return Promise.resolve()
     }
 

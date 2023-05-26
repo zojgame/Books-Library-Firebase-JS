@@ -48,26 +48,41 @@ export function splitBooksByAuthors(books) {
 
   // Get recommend book
   if(sortedBooks.length !== 0){
-    const recommendedBook = getRecommendBook(sortedBooks);
+    const recommendedBook = getRecommendBook(books);
     bookSectionTitle.set('Recommended book', [recommendedBook]);
   }  
   
       
-      // Devide books into authors
-      sortedBooks.forEach((book) => {
+      for(let i = 0; i < sortedBooks.length; i++){
+        let book = sortedBooks[i];
         let authors = book.authors;
   
-          // Split books on each author
-          authors.forEach((author) => {
-          if(bookSectionTitle.has(author)){
-              const currentAuthorBooks = bookSectionTitle.get(author);
-              bookSectionTitle.set(author, [...currentAuthorBooks, book])
-          }
-          else{
-              bookSectionTitle.set(author, [book])
-          }})
+        // Split books on each author
+        authors.forEach((author) => {
+        if(bookSectionTitle.has(author)){
+            const currentAuthorBooks = bookSectionTitle.get(author);
+            bookSectionTitle.set(author, [...currentAuthorBooks, book])
+        }
+        else{
+            bookSectionTitle.set(author, [book])
+        }})
       }
-    )
+
+      // Devide books into authors
+      // sortedBooks.forEach((book) => {
+      //   let authors = book.authors;
+  
+      //   // Split books on each author
+      //   authors.forEach((author) => {
+      //   if(bookSectionTitle.has(author)){
+      //       const currentAuthorBooks = bookSectionTitle.get(author);
+      //       bookSectionTitle.set(author, [...currentAuthorBooks, book])
+      //   }
+      //   else{
+      //       bookSectionTitle.set(author, [book])
+      //   }})
+      // }
+    // )
 
     // Convert from Map to Array
     const newArr = Array.from(bookSectionTitle, ([key, value]) => [key, value])

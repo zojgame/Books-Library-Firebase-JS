@@ -5,10 +5,14 @@ import { deleteDoc, doc } from 'firebase/firestore';
 import { db } from "../firestore/firestore";
 
 export const BookCard = ({ book }) => {
-    const { isDeleting, isEditing, setEditModalOpen, setIsFetching } = useBooksStore();
+    const { isDeleting, isEditing, 
+      setIsFetching, setAuthorsFields, setEditModal } = useBooksStore();
+    const {setEditBook} = useBooksStore(state => ({setEditBook: state.setEditBook}));
 
-    const handleUpdateBookClick = async() => {
-        setEditModalOpen(book.id)
+    const handleUpdateBookClick = () => {
+      setEditBook(book);
+      setAuthorsFields(book.authors.slice(1, book.authors.length));
+      setEditModal(prev => !prev);      
     }
 
     const handleDeleteBook = async(bookId) => {
@@ -25,23 +29,32 @@ export const BookCard = ({ book }) => {
       }
 
    return (
-    <Card key={book.id} className='books-card' title={<p className='books-title' key={book.id}>{book.title}</p>}>                
-        {book.rating && <Progress 
-        className='book-rating'
-        type='circle' 
-        percent={book.rating * 10} 
-        status='normal' 
-        strokeColor={'yellow'} 
-        size={50}
-        gapPosition='right'
-        format={(percent) => `${percent / 10 } / 10`}
-        />}
-        {book.authors.length === 1 
-            ? <p className='book-authors'>Автор: {book.authors[0]}</p>
-            : <p className='book-authors'>Авторы: {book.authors.join(', ')}</p>}
-        {book.date !== undefined ?? <p className='book-date'>Год выпуска: {book.date}</p>}
-        {isDeleting && <Button className="delete-btn" onClick={() => handleDeleteBook(book.id)}><DeleteOutlined /></Button>}
-        {isEditing && <Button onClick={handleUpdateBookClick}><EditOutlined /></Button>}
-    </Card>
+    <>
+      <Card key={book.id} className='books-card' title={<p className='books-title' key={book.id}>{book.title}</p>}>  
+        <div className="book-info">
+          {book.authors.length === 1 
+                ? <div className='book-authors'><p>Author</p><p>{book.authors[0]}</p> </div>
+                : <div className='book-authors'><p>Authors</p><p>{book.authors.join(', ')}</p> </div>}
+                {book.rating && <Progress 
+                className='book-rating'
+                type='circle' 
+                percent={book.rating * 10} 
+                status='normal' 
+                strokeColor={'yellow'} 
+                size={60}
+                format={(percent) => `${percent / 10 } / 10`}
+                />}
+            {(book?.date) && <p className='book-date'>Realise year {book.date}</p>}
+            {(book?.isnb) && <p className='book-isnb'>ISNB {book.isnb}</p>}
+        </div>   
+        <div className="book-buttons">
+          {isDeleting && <Button className="delete-btn card-btn" onClick={() => handleDeleteBook(book.id)}><DeleteOutlined /></Button>}
+          {isEditing && <Button onClick={handleUpdateBookClick} className="card-btn"><EditOutlined /></Button>}
+          
+          </div>           
+          
+
+      </Card>
+    </>
    );
 };

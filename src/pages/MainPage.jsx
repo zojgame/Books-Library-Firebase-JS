@@ -5,17 +5,18 @@ import "firebase/firestore";
 import "firebase/auth";
 import { useEffect, useState } from 'react';
 import { Content } from 'antd/es/layout/layout';
-import { BooksSection, ModalCreationComponent, ModalEditComponent } from '../components';
+import { BooksSection, ModalCreationComponent } from '../components';
 import { Segmented, Layout, Button } from 'antd';
 import { PlusCircleOutlined, DeleteOutlined, CloseOutlined, EditOutlined } from '@ant-design/icons';
 import { splitBooksByAuthors, splitBooksByYear } from '../calculation';
 import { useBooksStore } from '../store/store';
+import { ModalEditComponent } from '../components';
 
 export function MainPage() {
   const [group, setGroup] = useState('Years');
   const { isDeleting, setIsDeleting, setIsEditing,
           isEditing, books, setBooks,
-          isFetching, switchCreateModal } = useBooksStore();
+          isFetching, switchCreateModal, setAuthorsFields } = useBooksStore();
 
   useEffect(() => {    
     getBooks()
@@ -31,7 +32,8 @@ export function MainPage() {
   }, [ isFetching, group ])
 
   const handleModalOpen = () => {
-    switchCreateModal()
+    setAuthorsFields([]);
+    switchCreateModal();
   }
 
   const handleDeleteBtn = () => {
@@ -74,9 +76,10 @@ export function MainPage() {
               })       
           }                   
 
-          <ModalCreationComponent 
-          />     
-          <ModalEditComponent />     
+          <ModalCreationComponent /> 
+          <ModalEditComponent/>
+          
+             
         </Content>
       </Layout>
     </Layout>)

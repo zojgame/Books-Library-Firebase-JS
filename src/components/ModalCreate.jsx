@@ -2,18 +2,19 @@ import '../App.css'
 import "firebase/firestore";
 import "firebase/auth";
 import { Modal, Button, Form, Input, notification } from 'antd';
-import { PlusCircleOutlined } from '@ant-design/icons';
+import { PlusCircleOutlined, MinusCircleOutlined } from '@ant-design/icons';
 import { isnbValidation, dateValidation, ratingValidation } from '../calculation';
 import { useBooksStore } from '../store/store';
 import { useRef } from 'react';
 import { addDoc, collection } from 'firebase/firestore';
 import { db } from '../firestore';
-import { nanoid } from 'nanoid';
 
 export function ModalCreateComponent() {
     const {authorsFields, setAuthorsFields, 
         switchCreateModal, isCreateModalOpen, setIsFetching } = useBooksStore();
+
     const modalRef = useRef();
+    
 
     const handleModalClose = () => {
         switchCreateModal();
@@ -25,29 +26,32 @@ export function ModalCreateComponent() {
 
     const handleAddAuthors = () => {
         if(authorsFields.length < 2){
-          const newAuthorsFields = [...authorsFields, {id: nanoid(), placeholder: 'Enter another author'}]
+          const newAuthorsFields = [...authorsFields, {id: authorsFields.length, placeholder: 'Enter another author'}]
+
+          modalRef.current.resetFields()
           setAuthorsFields(newAuthorsFields);
         }
     }
+    
+    const handleDeleteAuthors = () => {
+      if(authorsFields.length >= 1){
+        const newAuthorsFields = [...authorsFields.slice(0, authorsFields.length - 1)]
+        setAuthorsFields(newAuthorsFields);
+      }
+  }
 
     const handleFormConfirm = async(values) => {
-        let authors = [];
         const books = collection(db, 'books');
-        
-        switch (authorsFields.length) {
-          case 2:
-            authors = [values.authors, values.authors_0, values.authors_1];        
-            break;
-          case 1:
-            authors = [values.authors, values.authors_0];        
-            break;
-          default:
-            authors = [values.authors];  
-            break;
-        }
+
+        // Delete empty form fields
+        const newAuthors = [values.authors, values.authors_0, values.authors_1]
+          .filter(author => 
+            author !== undefined 
+            && author !== null
+            && author !== '');
             
         const book = {
-          authors: authors ?? null,
+          authors: newAuthors ?? null,
           date: values.date ?? null,
           title: values.bookTitle,
           isnb: values.isnb ?? null,
@@ -120,13 +124,16 @@ export function ModalCreateComponent() {
             {
                 authorsFields.map((author, index) => 
                 <Form.Item 
-                    key={author.id}
+                    key={index}
                     name={`authors_${index}`}>
                     <Input placeholder={`Enter another author`} />                                        
                 </Form.Item>)
             }
 
-            <Button icon={<PlusCircleOutlined/>} onClick={handleAddAuthors}></Button>
+            <div className="change-authors-btn">
+              <Button icon={<PlusCircleOutlined/>} onClick={handleAddAuthors}></Button>
+              <Button icon={<MinusCircleOutlined/>} onClick={handleDeleteAuthors}></Button>
+            </div>
             <div className="book-form-button">
                 <Button type='link' onClick={handleModalClose}>Cancel</Button>
                 <Button type='primary' htmlType='submit'>Save</Button>

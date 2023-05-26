@@ -6,7 +6,7 @@ export const useBooksStore = create((set) => ({
     isFetching: false,
     isEditModalOpen: false,
     isCreateModalOpen: false,
-    editBookId: '',
+    editBook: {},
     books: [],
     authorsFields: [],
     switchCreateModal: () => set((state) => (
@@ -14,11 +14,23 @@ export const useBooksStore = create((set) => ({
             isCreateModalOpen: !state.isCreateModalOpen
         }
     )),
-    setEditModalOpen: (id) => set((state) =>
+    setEditModal: (isEditModal) => set((state) =>
+    (
+        {
+            isEditModalOpen: isEditModal,
+        }
+    )),
+    setEditModalOpen: () => set((state) =>
     (
         {
             isEditModalOpen: true,
-            editBookId: id
+        }
+    )),
+    setEditBook: (editBook) => set((state) =>
+    (
+        {
+            editBook: editBook
+
         }
     )),
     setEditModalClose: () => set((state) =>
